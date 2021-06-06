@@ -1,2 +1,2 @@
-# weather-dashboard
-A weather dashboard using HTML, CSS, JavaScript and OpenWeather API
+# Weather Dashboard
+A weather dashboard using HTML, CSS, JavaScript and OpenWeather API.

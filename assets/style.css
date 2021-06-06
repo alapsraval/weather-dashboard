@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-gradient {
+    background: linear-gradient(to right, #3b6ec3, #230455) no-repeat fixed center;
+}
+
+.temp::after {
+    content: "\2109";
+}
+
+.speed::after {
+    content: " MPH";
+}
+
+.humidity::after {
+    content: " \0025";
+}
