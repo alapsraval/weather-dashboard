@@ -33,25 +33,26 @@
                     </form>
                     <hr>
                     <div id="search-history"></div>
-                    <button type="submit" class="btn btn-danger btn-block mt-2" id="clear-btn">Clear History</button>
+                    <button type="submit" class="btn btn-danger btn-block mt-2 d-none" id="clear-btn">Clear History</button>
                 </div>
                 <!-- right column with current weather and 5-day forecast -->
-                <div class="col-lg-9 pt-3">
-                    <div id="search-result">
-                        <div class="current-weather card">
-                            <div class="card-body">
-                                <h4 class="card-title"><span id="search-result-city">Atlanta</span> <span class="small text-muted" id="current-date">03/31/2021</span><span id="current-weather-icon"></span></h4>
-                                <p class="card-text temp" id="search-result-temp">65</p>
-                                <p class="card-text speed" id="search-result-wind">6.65</p>
-                                <p class="card-text humidity" id="search-result-humidity">46</p>
-                                <p class="card-text uv-index" id="search-result-uv-index"><span class="badge badge-success">0.47</span></p>
-                            </div>
+                <div id="search-result" class="col-lg-9 pt-3 d-none">
+                    <div class="current-weather card">
+                        <div class="card-body">
+                            <h4 class="card-title"><span id="search-result-city">Atlanta</span> <span
+                                    class="small text-muted" id="current-date">03/31/2021</span><span
+                                    id="current-weather-icon"></span></h4>
+                            <p class="card-text temp" id="search-result-temp">65</p>
+                            <p class="card-text speed" id="search-result-wind">6.65</p>
+                            <p class="card-text humidity" id="search-result-humidity">46</p>
+                            <p class="card-text uv-index" id="search-result-uv-index"><span
+                                    class="badge badge-success">0.47</span></p>
                         </div>
-                        <!-- container for 5-day forecast -->
-                        <div class="pt-3">
-                            <h5>5-Day Forecast:</h5>
-                            <div id="five-day-weather" class="row"></div>
-                        </div>
+                    </div>
+                    <!-- container for 5-day forecast -->
+                    <div class="pt-3">
+                        <h5>5-Day Forecast:</h5>
+                        <div id="five-day-weather" class="row"></div>
                     </div>
                 </div>
             </div>

@@ -24,7 +24,6 @@ const apiKey = '3ab673231f1f0f7ca19b74198c8a06f2';
 const excludeProps = 'minutely,hourly,alerts';
 
 function init() {
-  searchResultEl.classList = 'd-none';
   searchHistory = getSearchHistory();
   renderHistoryButtons();
 }
@@ -54,7 +53,7 @@ function displayCurrentWeather(city, currentWeather) {
   resultWindEl.textContent = currentWeather.wind_speed;
   resultHumidityEl.textContent = currentWeather.humidity;
   resultUVIndexEl.innerHTML = `<span class="badge badge-${getColorClass(currentWeather.uvi)}">${currentWeather.uvi}</span>`;
-  searchResultEl.classList = 'd-block';
+  searchResultEl.classList.add('d-block');
 }
 
 function displayWeatherForecast(dailyForecast) {
