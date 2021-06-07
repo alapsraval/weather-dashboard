@@ -6,14 +6,38 @@ body {
     background: linear-gradient(to right, #3b6ec3, #230455) no-repeat fixed center;
 }
 
+.temp::before {
+    content: "Temp: ";
+}
+
 .temp::after {
     content: "\2109";
+}
+
+.speed::before {
+    content: "Wind: ";
 }
 
 .speed::after {
     content: " MPH";
 }
 
+.humidity::before {
+    content: "Humidity: ";
+}
+
 .humidity::after {
     content: " \0025";
+}
+
+.uv-index::before{
+    content: "UV Index: ";
+}
+
+#current-date::before{
+    content: "\0028";
+}
+
+#current-date::after{
+    content: "\0029";
 }
