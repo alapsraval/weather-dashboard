@@ -1,6 +1,9 @@
 //global variables
 let searchInput = document.getElementById('search-input');
 let searchBtn = document.getElementById('search-btn');
+let clearBtn = document.getElementById('clear-btn');
+let searchHistoryEl = document.getElementById('search-history');
+// let huistoryBtn = document.querySelectorAll('history-btn');
 let searchResultEl = document.getElementById('search-result');
 let resultCityEl = document.getElementById('search-result-city');
 let currentDateEl = document.getElementById('current-date');
@@ -12,6 +15,8 @@ let resultUVIndexEl = document.getElementById('search-result-uv-index');
 
 let weatherForecastEl = document.getElementById('five-day-weather');
 
+let searchHistory = [];
+
 // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 // api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 const openWeatherApiUrl = "https://api.openweathermap.org/data/2.5";
@@ -20,11 +25,14 @@ const excludeProps = 'minutely,hourly,alerts';
 
 function init() {
   searchResultEl.classList = 'd-none';
+  searchHistory = getSearchHistory();
+  renderHistoryButtons();
 }
 
-async function getApi(e) {
+async function getApi(e, selectedCity) {
   e.preventDefault();
-  let searchKeyword = searchInput.value;
+  let searchKeyword = selectedCity || searchInput.value;
+  searchHistory.unshift(searchKeyword);
   let weatherUrl = `${openWeatherApiUrl}/weather?q=${searchKeyword}&appid=${apiKey}`;
   let cityDetails = await fetch(weatherUrl).then(response => response.json());
   const coordinates = cityDetails.coord;
@@ -33,7 +41,9 @@ async function getApi(e) {
   let weatherDetails = await fetch(oneCallUrl).then(response => response.json());
   console.log(weatherDetails);
   displayCurrentWeather(cityDetails.name, weatherDetails.current);
-  displayWeatherForecast(weatherDetails.daily)
+  displayWeatherForecast(weatherDetails.daily);
+  setSearchHistory(searchHistory);
+  renderHistoryButtons();
 }
 
 function displayCurrentWeather(city, currentWeather) {
@@ -50,7 +60,7 @@ function displayCurrentWeather(city, currentWeather) {
 function displayWeatherForecast(dailyForecast) {
   weatherForecastEl.innerHTML = '';
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i < 6; i++) {
     let weatherDate = new Date(dailyForecast[i].dt*1000).toLocaleDateString();
     let temp = dailyForecast[i].temp.day;
     let wind = dailyForecast[i].wind_speed;
@@ -71,6 +81,34 @@ function displayWeatherForecast(dailyForecast) {
   }
 }
 
+function getSearchHistory(){
+  return JSON.parse(localStorage.getItem('searchHistory')) || searchHistory;
+}
+
+function setSearchHistory(searchHistory){
+  let topTenSearchHistory = searchHistory.slice(0, 10);
+  localStorage.setItem('searchHistory', JSON.stringify(topTenSearchHistory));
+}
+
+function clearSearchHistory(){
+  localStorage.clear();
+  searchHistory = [];
+  renderHistoryButtons();
+}
+
+function renderHistoryButtons(){
+  let topTenSearchHistory = searchHistory.slice(0, 10);
+  searchHistoryEl.innerHTML = '';
+  clearBtn.classList.add('d-none');
+  if (topTenSearchHistory && topTenSearchHistory.length > 0){
+    topTenSearchHistory.forEach(city => {
+      let historyBtn = `<button type="button" class="btn btn-light btn-block history-btn">${city}</button>`;
+      searchHistoryEl.innerHTML += historyBtn;
+    });
+    clearBtn.classList.remove('d-none');
+  }
+}
+
 // utility functions 
 
 function getColorClass(value) {
@@ -81,3 +119,9 @@ function getColorClass(value) {
 
 init();
 searchBtn.addEventListener('click', getApi);
+searchHistoryEl.addEventListener('click', function(e){
+  let city = e.target.textContent;
+  console.log(city);
+  getApi(e, city);
+});
+clearBtn.addEventListener('click', clearSearchHistory);
